@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Payment Page</title>
+</head>
+<body>
+<h1>Payment Page Working</h1>
+<p>Name: <span id="name"></span></p>
+<p>Amount: ₹<span id="amount"></span></p>
+
+<script>
+const params = new URLSearchParams(window.location.search);
+
+document.getElementById("name").textContent =
+params.get("name") || "Customer";
+
+document.getElementById("amount").textContent =
+params.get("amount") || "0";
+</script>
+
+</body>
+</html>
