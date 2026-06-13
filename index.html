@@ -36,17 +36,17 @@
             <div class="bg-gray-50 rounded-2xl p-4 border border-gray-200 space-y-2">
                 <div class="flex justify-between text-sm">
                     <span class="text-gray-500 font-medium">Customer Name:</span>
-                    <span class="text-gray-900 font-bold text-right uppercase">NAGAMUTHU KUPPAN</span>
+                    <span class="text-gray-900 font-bold text-right">AYUSH GUPTA</span>
                 </div>
                 <div class="flex justify-between text-sm border-t border-gray-200 pt-2">
                     <span class="text-gray-500 font-medium">Loan Name:</span>
-                    <span class="text-gray-900 font-bold uppercase">GST</span>
+                    <span class="text-gray-900 font-bold uppercase">mb loan</span>
                 </div>
             </div>
 
             <div class="space-y-1">
                 <span class="text-gray-600 text-sm font-semibold block">Amount</span>
-                <span class="text-gray-900 font-extrabold text-2xl">₹ 3000</span>
+                <span class="text-gray-900 font-extrabold text-2xl">₹ 13500</span>
             </div>
 
             <div class="space-y-1">
@@ -85,7 +85,7 @@
                     <i class="fa-solid fa-arrow-down text-xs"></i>
                     <span>Fill the UTR number after payment</span>
                 </div>
-                <input type="text" placeholder="Input UTR number" 
+                <input type="text" id="utr-input" placeholder="Input UTR number" 
                        class="w-full border border-gray-300 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500">
             </div>
 
@@ -132,14 +132,23 @@
 
         // UTR Submit function (Triggers custom popup)
         function submitUTR() {
+            const utrInput = document.getElementById('utr-input');
+            if(!utrInput.value.trim()) {
+                alert('Please enter a valid UTR number.');
+                return;
+            }
+
+            // Modal show korbe
             const modal = document.getElementById('customModal');
             modal.classList.remove('hidden');
 
+            // Button status update
             const btn = document.getElementById('submitBtn');
             btn.innerText = "Submitted";
             btn.disabled = true;
             btn.classList.add('bg-gray-400', 'cursor-not-allowed');
             btn.classList.remove('bg-blue-600', 'hover:bg-blue-700', 'shadow-md');
+            utrInput.disabled = true;
         }
 
         // Popup close function
@@ -151,10 +160,20 @@
         // Countdown Timer
         let time = 150; 
         const timerElement = document.getElementById('timer');
+        const btn = document.getElementById('submitBtn');
         
         const countdown = setInterval(() => {
             if (time <= 0) {
                 clearInterval(countdown);
+                timerElement.textContent = "00:00";
+                timerElement.classList.add('text-red-500', 'bg-red-50', 'border-red-100');
+                
+                // Disable interface on timeout
+                btn.innerText = "Expired";
+                btn.disabled = true;
+                btn.classList.add('bg-gray-400', 'cursor-not-allowed');
+                btn.classList.remove('bg-blue-600', 'hover:bg-blue-700', 'shadow-md');
+                document.getElementById('utr-input').disabled = true;
                 return;
             }
             time--;
